@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b0rl18lod0dvi"]
+
+[ext_resource type="PackedScene" uid="uid://bv3rxl15k7bj6" path="res://addons/godot_super-wakatime/api_key_prompt.tscn" id="1_taxev"]
+
+[node name="Node2D" type="Node2D" unique_id=231534466]
+
+[node name="ApiKeyPrompt" parent="." unique_id=219854969 instance=ExtResource("1_taxev")]
+oversampling_override = 1.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1630594487]
+position = Vector2(581, 327)
