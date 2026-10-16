@@ -16,4 +16,4 @@ data_*/
 mono_crash.*.json
 
 # Wakatime
-addons/godot_super-wakatime/
+Impurity/addons/godot_super-wakatime/
