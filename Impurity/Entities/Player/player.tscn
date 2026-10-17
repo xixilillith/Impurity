@@ -1,17 +1,68 @@
 [gd_scene format=3 uid="uid://ktnmpwm5r4vi"]
 
 [ext_resource type="Script" uid="uid://clo4obhkqssq4" path="res://Entities/Player/Scripts/player.gd" id="1_3uyv8"]
-[ext_resource type="Texture2D" uid="uid://ds7alte6e5aoi" path="res://icon.svg" id="1_mv1ah"]
+[ext_resource type="Texture2D" uid="uid://bfbai4qna752q" path="res://Entities/Player/Assets/anime_idle_down.png" id="2_3uyv8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_juppl"]
-size = Vector2(128, 128)
+[sub_resource type="AtlasTexture" id="AtlasTexture_lu8i8"]
+atlas = ExtResource("2_3uyv8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tekja"]
+atlas = ExtResource("2_3uyv8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c2io"]
+atlas = ExtResource("2_3uyv8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wf4l"]
+atlas = ExtResource("2_3uyv8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01a4e"]
+atlas = ExtResource("2_3uyv8")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7a1se"]
+atlas = ExtResource("2_3uyv8")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ghhj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lu8i8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tekja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5c2io")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wf4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01a4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7a1se")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0ghhj"]
 
 [node name="Player" type="CharacterBody2D" unique_id=564327840]
 motion_mode = 1
 script = ExtResource("1_3uyv8")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1215812715]
-texture = ExtResource("1_mv1ah")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=82179153]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_0ghhj")
+autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1193275830]
-shape = SubResource("RectangleShape2D_juppl")
+shape = SubResource("CapsuleShape2D_0ghhj")
