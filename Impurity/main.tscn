@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://bur5rgx4cwris"]
 
 [ext_resource type="PackedScene" uid="uid://ktnmpwm5r4vi" path="res://Entities/Player/player.tscn" id="1_ig7tw"]
+[ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="3_1bvp3"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_juppl"]
 distance = -186.0
-
-[sub_resource type="TileSet" id="TileSet_juppl"]
 
 [node name="main" type="Node2D" unique_id=1778032614]
 
@@ -20,6 +20,8 @@ position_smoothing_enabled = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1944564006]
 shape = SubResource("WorldBoundaryShape2D_juppl")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=725777460]
-position = Vector2(16, 16)
-tile_set = SubResource("TileSet_juppl")
+[node name="TileMapDual" type="TileMapLayer" parent="." unique_id=177477499]
+material = ExtResource("2_h2yge")
+script = ExtResource("3_1bvp3")
+godot_4_3_compatibility = false
+metadata/_custom_type_script = "uid://cjk8nronimk5r"
