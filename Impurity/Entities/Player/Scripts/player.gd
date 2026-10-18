@@ -78,4 +78,4 @@ func is_moving() -> bool:
 	
 func update_anim() -> void:
 	is_moving()
-	$AnimatedSprite2D.play(status + "_" + facing_direction)
+	$sprite.play(status + "_" + facing_direction)

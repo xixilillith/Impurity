@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ktnmpwm5r4vi" path="res://Entities/Player/player.tscn" id="1_ig7tw"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://c252s12kaowdq" path="res://bullet_test.gd" id="4_1bvp3"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_juppl"]
 distance = -186.0
@@ -25,3 +26,13 @@ material = ExtResource("2_h2yge")
 script = ExtResource("3_1bvp3")
 godot_4_3_compatibility = false
 metadata/_custom_type_script = "uid://cjk8nronimk5r"
+
+[node name="bullet_test" type="Node2D" parent="." unique_id=865191118]
+position = Vector2(-86, -103)
+script = ExtResource("4_1bvp3")
+
+[node name="Timer" type="Timer" parent="bullet_test" unique_id=2052170566]
+wait_time = 0.3
+autostart = true
+
+[connection signal="timeout" from="bullet_test/Timer" to="bullet_test" method="_on_timer_timeout"]
