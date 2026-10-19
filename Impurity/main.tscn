@@ -168,7 +168,8 @@ shape = SubResource("WorldBoundaryShape2D_272bh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Right_Wall" unique_id=1593683306]
 shape = SubResource("WorldBoundaryShape2D_juppl")
 
-[node name="Player" parent="." unique_id=564327840 instance=ExtResource("1_ig7tw")]
+[node name="Player" parent="." unique_id=564327840 node_paths=PackedStringArray("boss") instance=ExtResource("1_ig7tw")]
+boss = NodePath("../Demo_Enemy")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2083479872]
 position = Vector2(-576, -322)

@@ -13,6 +13,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var health = Player.get_health()
 	var boss_health = Boss.get_health()
+	var graze = Player.get_graze()
 	$CanvasLayer/Label.text = "HEALTH: " + str(health)
 	$CanvasLayer/Label2.text = "BOSS HEALTH: " + str(boss_health)
 	$CanvasLayer/Label3.text = "WINS: " + str(win_count)
+	$CanvasLayer/Label5.text = "GRAZE: " + str(graze)

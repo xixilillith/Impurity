@@ -1,17 +1,23 @@
 extends CharacterBody2D
 
+@export var boss: Area2D
 const BULLET_SCENE = preload("res://Entities/player_bullet/player_bullet.tscn")
 const BULLET_OFFSET = Vector2(0, -20)
 const OFFSET_1 = Vector2(-10, 0)
 const OFFSET_2 = Vector2(10, 0)
 
 var bullet = 1
+var auto_aim = false
+var reward_duration = 10
 
 const SPEED = 300.0
 const SPRINT_MULTIPLIER = 1.5
 const SLOW_MULTIPLIER = 0.5
 
 var HEALTH = 100.0
+var GRAZE = 0
+# tick is for reward from graze
+var tick = 0
 var DEAD = false
 var attacking = false
 
@@ -98,6 +104,7 @@ func _physics_process(_delta: float) -> void:
 	#print(direction_queue)
 	#print("You are " + status + " facing " + facing_direction + ".")
 	
+	check_reward()
 
 func get_direction_sprite() -> void:
 	if not direction_queue.is_empty():
@@ -143,9 +150,31 @@ func shoot_bullet() -> void:
 	var new_bullet2 = BULLET_SCENE.instantiate()
 	new_bullet.global_position = global_position + BULLET_OFFSET + OFFSET_1
 	new_bullet2.global_position = global_position + BULLET_OFFSET + OFFSET_2
-	new_bullet.velocity = Vector2.UP * 200
-	new_bullet2.velocity = Vector2.UP * 200
+	if not auto_aim:
+		new_bullet.velocity = Vector2.UP * 200
+		new_bullet2.velocity = Vector2.UP * 200
+	else:
+		new_bullet.velocity = (boss.global_position \
+		- new_bullet.global_position).normalized() * 200
+		new_bullet2.velocity = (boss.global_position \
+		- new_bullet2.global_position).normalized() * 200
 	get_tree().current_scene.add_child(new_bullet)
 	get_tree().current_scene.add_child(new_bullet2)
 	await get_tree().create_timer(0.05).timeout
 	attacking = false
+
+func gain_graze(amount: int) -> void:
+	GRAZE += amount
+	tick += amount
+	
+func get_graze() -> int:
+	return GRAZE
+
+func check_reward() -> void:
+	if auto_aim == false:
+		if tick >= 100:
+			tick = 0
+			auto_aim = true
+			print("auto_aim")
+			await get_tree().create_timer(reward_duration).timeout
+			auto_aim = false
