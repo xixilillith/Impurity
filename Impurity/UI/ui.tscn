@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://srjueim1q7k6"]
+
+[ext_resource type="Script" uid="uid://4rae5jbvxh11" path="res://control.gd" id="1_2fwl4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_juppl"]
+
+[node name="UI" type="Control" unique_id=859088462]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2fwl4")
+
+[node name="Label" type="Label" parent="." unique_id=993506510]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.035
+offset_right = -0.3199997
+offset_bottom = 0.3199997
+label_settings = SubResource("LabelSettings_juppl")
