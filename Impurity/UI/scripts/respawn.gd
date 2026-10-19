@@ -1,5 +1,6 @@
 extends Control
 
+@export var boss: Area2D
 @export var player: CharacterBody2D
 @onready var respawn_button = $CanvasLayer/Button
 # Called when the node enters the scene tree for the first time.
@@ -16,5 +17,6 @@ func _process(delta: float) -> void:
 		respawn_button.visible = false
 
 func _on_button_pressed() -> void:
+	boss.respawn()
 	player.respawn()
 	respawn_button.visible = false

@@ -180,7 +180,8 @@ Boss = NodePath("../../Demo_Enemy")
 Player = NodePath("../../Player")
 metadata/_edit_use_anchors_ = true
 
-[node name="respawn" parent="." unique_id=1485174119 node_paths=PackedStringArray("player") instance=ExtResource("7_272bh")]
+[node name="respawn" parent="." unique_id=1485174119 node_paths=PackedStringArray("boss", "player") instance=ExtResource("7_272bh")]
+boss = NodePath("../Demo_Enemy")
 player = NodePath("../Player")
 
 [node name="Demo_Enemy" parent="." unique_id=128894906 instance=ExtResource("7_5vw27")]

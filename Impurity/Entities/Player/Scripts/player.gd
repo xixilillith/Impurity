@@ -2,6 +2,10 @@ extends CharacterBody2D
 
 const BULLET_SCENE = preload("res://Entities/player_bullet/player_bullet.tscn")
 const BULLET_OFFSET = Vector2(0, -20)
+const OFFSET_1 = Vector2(-10, 0)
+const OFFSET_2 = Vector2(10, 0)
+
+var bullet = 1
 
 const SPEED = 300.0
 const SPRINT_MULTIPLIER = 1.5
@@ -136,8 +140,12 @@ func respawn() -> void:
 func shoot_bullet() -> void:
 	attacking = true
 	var new_bullet = BULLET_SCENE.instantiate()
-	new_bullet.global_position = global_position + BULLET_OFFSET
+	var new_bullet2 = BULLET_SCENE.instantiate()
+	new_bullet.global_position = global_position + BULLET_OFFSET + OFFSET_1
+	new_bullet2.global_position = global_position + BULLET_OFFSET + OFFSET_2
 	new_bullet.velocity = Vector2.UP * 200
+	new_bullet2.velocity = Vector2.UP * 200
 	get_tree().current_scene.add_child(new_bullet)
+	get_tree().current_scene.add_child(new_bullet2)
 	await get_tree().create_timer(0.05).timeout
 	attacking = false
