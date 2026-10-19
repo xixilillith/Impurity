@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const BULLET_SCENE = preload("res://Entities/player_bullet/player_bullet.tscn")
+const BULLET_OFFSET = Vector2(0, -20)
 
 const SPEED = 300.0
 const SPRINT_MULTIPLIER = 1.5
@@ -7,6 +9,7 @@ const SLOW_MULTIPLIER = 0.5
 
 var HEALTH = 100.0
 var DEAD = false
+var attacking = false
 
 var direction_queue = []
 var facing_direction = "down"
@@ -19,11 +22,16 @@ func _physics_process(_delta: float) -> void:
 		print("DEAD")
 		DEAD = true
 	
+	if HEALTH > 0:
+		visible = true
+		DEAD = false
+	
 	# input, directions are -1, 0, or 1
 	var directionx := Input.get_axis("move_left", "move_right")
 	var directiony := Input.get_axis("move_up", "move_down")
 	var running := Input.is_action_pressed("run")
 	var slowing := Input.is_action_pressed("slow")
+	var shooting := Input.is_action_pressed("shoot")
 	var speed := SPEED
 	if running:
 		speed = speed * SPRINT_MULTIPLIER
@@ -70,6 +78,12 @@ func _physics_process(_delta: float) -> void:
 			direction_queue.erase("UP")
 
 		move_and_slide()
+		
+		# firing/shooting
+		
+		if shooting and not attacking:
+			shoot_bullet()
+
 	# USE THE FOLLOWING LINE IF NOTHING IS WORKING
 	#print("test")
 	
@@ -79,7 +93,7 @@ func _physics_process(_delta: float) -> void:
 	# USE THE FOLLOWING LINES IF SPRITES ARE NOT UPDATING CORRECTLY
 	#print(direction_queue)
 	#print("You are " + status + " facing " + facing_direction + ".")
-
+	
 
 func get_direction_sprite() -> void:
 	if not direction_queue.is_empty():
@@ -102,7 +116,29 @@ func take_damage(amount) -> void:
 func get_health() -> int:
 	if DEAD:
 		if has_node("bullet_collision"):
-			$bullet_collision.queue_free()
+			$bullet_collision.monitorable = false
 		return 0
 	else:
+		$bullet_collision.monitorable = true
 		return HEALTH
+
+func is_dead() -> bool:
+	if DEAD:
+		return true
+	else:
+		return false
+
+func respawn() -> void:
+	if DEAD:
+		global_position = Vector2(0, 0)
+		HEALTH = 100
+		DEAD = false
+
+func shoot_bullet() -> void:
+	attacking = true
+	var new_bullet = BULLET_SCENE.instantiate()
+	new_bullet.global_position = global_position + BULLET_OFFSET
+	new_bullet.velocity = Vector2.UP * 200
+	get_tree().current_scene.add_child(new_bullet)
+	await get_tree().create_timer(0.2).timeout
+	attacking = false

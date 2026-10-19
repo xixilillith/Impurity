@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cqt6qt5xgh1bi" path="res://Tilemaps/tileset_placeholder.png" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://c252s12kaowdq" path="res://bullet_test.gd" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://srjueim1q7k6" path="res://UI/ui.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b8yjp78320gai" path="res://UI/respawn.tscn" id="7_272bh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7mycd"]
 texture = ExtResource("3_lquwl")
@@ -184,5 +185,8 @@ position_smoothing_enabled = true
 [node name="UI" parent="Camera2D" unique_id=859088462 node_paths=PackedStringArray("Player") instance=ExtResource("6_7mycd")]
 Player = NodePath("../../Player")
 metadata/_edit_use_anchors_ = true
+
+[node name="Control" parent="." unique_id=1485174119 node_paths=PackedStringArray("player") instance=ExtResource("7_272bh")]
+player = NodePath("../Player")
 
 [connection signal="timeout" from="bullet_test/Timer" to="bullet_test" method="_on_timer_timeout"]
