@@ -8,7 +8,7 @@ func _on_timer_timeout() -> void:
 	var player_is_dead = player.is_dead()
 	var player_dir := (player.global_position - global_position).normalized()
 	
-	if not attacking and not player_is_dead:
+	if not attacking and not player_is_dead and not get_parent().is_dead():
 		if attack_num == 1:
 			fire_arc_ltr(10, 45, player_dir, 200, 0.05)
 			attack_num = 2

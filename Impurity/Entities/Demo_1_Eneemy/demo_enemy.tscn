@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://evw0ychd2tda"]
+
+[ext_resource type="Texture2D" uid="uid://bq2xx57d1xt4" path="res://Entities/Demo_1_Eneemy/Assets/demo_1_enemy.png" id="1_fdph4"]
+[ext_resource type="Script" uid="uid://bc1fvq5wly6ug" path="res://Entities/Demo_1_Eneemy/demo_enemy.gd" id="1_h6jla"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_juppl"]
+radius = 16.0
+
+[node name="Area2D" type="Area2D" unique_id=2131305372]
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_h6jla")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=285928318]
+texture_filter = 1
+texture = ExtResource("1_fdph4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1340185348]
+shape = SubResource("CircleShape2D_juppl")

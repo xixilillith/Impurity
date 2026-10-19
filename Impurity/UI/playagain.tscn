@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://vshddccu3nck"]
+
+[ext_resource type="Script" uid="uid://biipdorymps2u" path="res://UI/scripts/playagain.gd" id="1_pkloq"]
+
+[node name="Control" type="Control" unique_id=812463050]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pkloq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=570925678]
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=680666982]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -15.5
+offset_right = 44.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play Again"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

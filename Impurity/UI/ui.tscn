@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://srjueim1q7k6"]
 
-[ext_resource type="Script" uid="uid://4rae5jbvxh11" path="res://control.gd" id="1_2fwl4"]
+[ext_resource type="Script" uid="uid://4rae5jbvxh11" path="res://UI/scripts/ui.gd" id="1_2fwl4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_juppl"]
 
@@ -13,11 +13,39 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2fwl4")
 
-[node name="Label" type="Label" parent="." unique_id=993506510]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.035
-anchor_bottom = 0.035
-offset_right = -0.3199997
-offset_bottom = 0.3199997
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=529671946]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=993506510]
+offset_right = 1.0
+offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_juppl")
+
+[node name="Label2" type="Label" parent="CanvasLayer" unique_id=580038700]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
+[node name="Label3" type="Label" parent="CanvasLayer" unique_id=1396661112]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Label4" type="Label" parent="CanvasLayer" unique_id=1069105428]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -127.0
+offset_right = 230.0
+grow_vertical = 0
+text = "KEYBINDS:
+WASD or Arrow Keys to move.
+Z to shoot.
+X to speed up. (Hold)
+Shift to slow down. (Hold)"

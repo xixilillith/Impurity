@@ -129,10 +129,9 @@ func is_dead() -> bool:
 		return false
 
 func respawn() -> void:
-	if DEAD:
-		global_position = Vector2(0, 0)
-		HEALTH = 100
-		DEAD = false
+	global_position = Vector2(0, 0)
+	HEALTH = 100
+	DEAD = false
 
 func shoot_bullet() -> void:
 	attacking = true
@@ -140,5 +139,5 @@ func shoot_bullet() -> void:
 	new_bullet.global_position = global_position + BULLET_OFFSET
 	new_bullet.velocity = Vector2.UP * 200
 	get_tree().current_scene.add_child(new_bullet)
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.05).timeout
 	attacking = false
