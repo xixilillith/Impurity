@@ -225,6 +225,7 @@ func fire_laser_semi_ltr_chaos(length: float, count: int) -> void:
 
 func run_laser(head: Area2D, body: Line2D, length: float, dir: float, pos: Vector2) -> void:
 	var sprite: AnimatedSprite2D = head.get_node("AnimatedSprite2D")
+	var emitter: GPUParticles2D = head.get_node("GPUParticles2D")
 	head.global_position = pos
 	head.global_rotation = dir
 	body.global_position = pos
@@ -233,6 +234,7 @@ func run_laser(head: Area2D, body: Line2D, length: float, dir: float, pos: Vecto
 	
 	get_tree().current_scene.add_child(head)
 	await sprite.animation_finished
+	emitter.emitting = true
 	get_tree().current_scene.add_child(body)
 	
 	var tween := create_tween()
