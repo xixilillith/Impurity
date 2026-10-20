@@ -13,7 +13,7 @@ func _ready() -> void:
 	randomize()
 
 func _on_timer_timeout() -> void:
-	var random_attack = randi_range(1, 6)
+	var random_attack = randi_range(1, 8)
 	var player_is_dead = player.is_dead()
 	var player_dir := (player.global_position - global_position).normalized()
 	
@@ -35,6 +35,12 @@ func _on_timer_timeout() -> void:
 			attack_num = random_attack
 		elif attack_num == 6:
 			fire_laser_cross_auto(1000)
+			attack_num = random_attack
+		elif attack_num == 7:
+			fire_laser_semi_ltr_auto(1000, 10)
+			attack_num = random_attack
+		elif attack_num == 8:
+			fire_laser_semi_rtl_auto(1000, 10)
 			attack_num = random_attack
 		
 func fire_arc_ltr(count: int, arc_deg: float, center_dir: Vector2, vel: int, delay: float) -> void:
@@ -180,4 +186,70 @@ func fire_laser_cross_auto(length: float) -> void:
 	las_body_2.queue_free()
 	las_head_1.queue_free()
 	las_head_2.queue_free()
+	attacking = false
+
+func fire_laser_semi_ltr_auto(length: float, count: int) -> void:
+	attacking = true
+	var center = (get_parent().POINTA + get_parent().POINTB) / 2
+	var radius = (get_parent().POINTB - get_parent().POINTA).length() / 2
+	var start_angle = (get_parent().POINTB - center).angle()
+	for i in count:
+		var n_las_head = laser_head_scn.instantiate()
+		var n_las_body = laser_body_scn.instantiate()
+		var t = float(i) / (count - 1)
+		var arc_angle = start_angle - PI * t
+		var pos = center + Vector2.from_angle(arc_angle) * radius
+		var aim = (player.global_position - pos).normalized()
+		var dir = aim.angle()
+		n_las_head.global_position = pos
+		n_las_head.global_rotation = dir
+		n_las_body.global_position = pos
+		n_las_body.global_rotation = dir
+		n_las_body.set_point_position(1, Vector2.ZERO)
+		
+		get_tree().current_scene.add_child(n_las_head)
+		get_tree().current_scene.add_child(n_las_body)
+		
+		get_tree().create_timer(1.3).timeout.connect(n_las_head.queue_free)
+		get_tree().create_timer(1.3).timeout.connect(n_las_body.queue_free)
+		
+		var tween := create_tween()
+		tween.set_parallel(true)
+		tween.tween_method(func(x: float): n_las_body.set_point_position(1, Vector2(x, 0)), 0.0, length, 0.3)
+		
+		await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(1.1).timeout
+	attacking = false
+
+func fire_laser_semi_rtl_auto(length: float, count: int) -> void:
+	attacking = true
+	var center = (get_parent().POINTA + get_parent().POINTB) / 2
+	var radius = (get_parent().POINTA - get_parent().POINTB).length() / 2
+	var start_angle = (get_parent().POINTA - center).angle()
+	for i in count:
+		var n_las_head = laser_head_scn.instantiate()
+		var n_las_body = laser_body_scn.instantiate()
+		var t = float(i) / (count - 1)
+		var arc_angle = start_angle + PI * t
+		var pos = center + Vector2.from_angle(arc_angle) * radius
+		var aim = (player.global_position - pos).normalized()
+		var dir = aim.angle()
+		n_las_head.global_position = pos
+		n_las_head.global_rotation = dir
+		n_las_body.global_position = pos
+		n_las_body.global_rotation = dir
+		n_las_body.set_point_position(1, Vector2.ZERO)
+		
+		get_tree().current_scene.add_child(n_las_head)
+		get_tree().current_scene.add_child(n_las_body)
+		
+		get_tree().create_timer(1.3).timeout.connect(n_las_head.queue_free)
+		get_tree().create_timer(1.3).timeout.connect(n_las_body.queue_free)
+		
+		var tween := create_tween()
+		tween.set_parallel(true)
+		tween.tween_method(func(x: float): n_las_body.set_point_position(1, Vector2(x, 0)), 0.0, length, 0.3)
+		
+		await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(1.1).timeout
 	attacking = false
