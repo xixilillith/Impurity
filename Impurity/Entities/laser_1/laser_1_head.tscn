@@ -1,7 +1,57 @@
 [gd_scene format=3 uid="uid://dgdlgm1j77ypv"]
 
 [ext_resource type="Script" uid="uid://ce2v0fl5fa7iu" path="res://Entities/laser_1/Scripts/laser_1_head.gd" id="1_4vivr"]
-[ext_resource type="Texture2D" uid="uid://24kmvxp2eqr3" path="res://Entities/laser_1/Assets/laser_1_head.png" id="1_pt4ky"]
+[ext_resource type="Texture2D" uid="uid://vh4446pe5rnf" path="res://Entities/laser_1/Assets/laser_1_head_anim.png" id="2_4vivr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nfsc"]
+atlas = ExtResource("2_4vivr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrgy"]
+atlas = ExtResource("2_4vivr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7a8oc"]
+atlas = ExtResource("2_4vivr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wseuf"]
+atlas = ExtResource("2_4vivr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwlle"]
+atlas = ExtResource("2_4vivr")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svtov"]
+atlas = ExtResource("2_4vivr")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_juppl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nfsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7a8oc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wseuf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwlle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svtov")
+}],
+"loop": 0,
+"name": &"init",
+"speed": 6.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4vivr"]
 radius = 8.062258
@@ -10,12 +60,15 @@ radius = 8.062258
 collision_mask = 2
 script = ExtResource("1_4vivr")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1820211024]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2048350755]
 texture_filter = 1
-texture = ExtResource("1_pt4ky")
+sprite_frames = SubResource("SpriteFrames_juppl")
+animation = &"init"
+autoplay = "init"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=79890703]
 shape = SubResource("CircleShape2D_4vivr")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

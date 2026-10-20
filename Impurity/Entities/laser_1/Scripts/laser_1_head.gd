@@ -1,5 +1,6 @@
 extends Area2D
 
+var done_startup = false
 var in_laser := false
 var player = TYPE_NIL
 @onready var shape = $CollisionShape2D
@@ -18,4 +19,11 @@ func _physics_process(delta: float) -> void:
 		if player.has_method("take_damage"):
 			player.take_damage(2)
 		
-		
+func _on_animated_sprite_2d_animation_finished() -> void:
+	done_startup = true
+	
+func check_progress() -> bool:
+	if done_startup:
+		return true
+	else:
+		return false

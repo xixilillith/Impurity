@@ -8,7 +8,8 @@ var MID_POINT: Vector2 = (POINTA + POINTB) / Vector2(2, 2)
 var target_point: Vector2
 
 var DEAD = false
-var HEALTH = 100
+const MAX_HEALTH := 500.0
+var HEALTH := 500.0
 var velocity = Vector2.ZERO
 
 func _ready() -> void:
@@ -47,6 +48,6 @@ func get_health() -> int:
 	return HEALTH
 
 func respawn() -> void:
-	HEALTH = 100
+	HEALTH = MAX_HEALTH
 	DEAD = false
 	global_position = Vector2(0, -125)

@@ -14,7 +14,8 @@ const SPEED = 300.0
 const SPRINT_MULTIPLIER = 1.5
 const SLOW_MULTIPLIER = 0.5
 
-var HEALTH = 100.0
+const MAX_HEALTH := 150.0
+var HEALTH := 150.0
 var GRAZE = 0
 # tick is for reward from graze
 var tick = 0
@@ -141,7 +142,7 @@ func is_dead() -> bool:
 
 func respawn() -> void:
 	global_position = Vector2(0, 0)
-	HEALTH = 100
+	HEALTH = MAX_HEALTH
 	DEAD = false
 
 func shoot_bullet() -> void:
