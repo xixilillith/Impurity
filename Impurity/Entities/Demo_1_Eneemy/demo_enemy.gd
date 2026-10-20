@@ -2,6 +2,7 @@ extends Area2D
 
 @export var POINTA: Vector2 = Vector2(100, -125)
 @export var POINTB: Vector2 = Vector2(-100, -125)
+var MID_POINT: Vector2 = (POINTA + POINTB) / Vector2(2, 2)
 @export var SPEED: float = 100.0
 
 var target_point: Vector2

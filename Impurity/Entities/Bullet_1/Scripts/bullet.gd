@@ -1,6 +1,8 @@
 extends Area2D
 
 var velocity := Vector2.ZERO
+var HAS_GRAZED := false
+var HAS_HIT := false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -10,12 +12,15 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("take_damage"):
 		area.get_parent().take_damage(15)
+		HAS_HIT = true
 	queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
 #GRAZE!
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.get_parent().has_method("gain_graze"):
-		area.get_parent().gain_graze(10)
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	if area.get_parent().has_method("gain_graze") and not HAS_GRAZED \
+	and not HAS_HIT:
+		area.get_parent().gain_graze(5)
+		HAS_GRAZED = true

@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://dlwi0equas5os"]
 
-[ext_resource type="Texture2D" uid="uid://dkmc56gb8gttk" path="res://Entities/Bullet_1/Assets/bullet_1.png" id="1_2ggh7"]
+[ext_resource type="Texture2D" uid="uid://cuy3m3xwu5ifd" path="res://Entities/Bullet_1/Assets/bullet_1.png" id="1_2ggh7"]
 [ext_resource type="Script" uid="uid://ba71wi365t8ke" path="res://Entities/Bullet_1/Scripts/bullet.gd" id="1_spgyy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_juppl"]
-radius = 9.0
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_86kna"]
-radius = 21.0
+radius = 18.439089
 
 [node name="Bullet" type="Area2D" unique_id=1624896751]
 collision_layer = 4
@@ -28,9 +28,10 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_86kna")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=73458740]
-rect = Rect2(-16, -16, 32, 32)
+rect = Rect2(-8, -8, 16, 16)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

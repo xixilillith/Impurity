@@ -169,6 +169,7 @@ shape = SubResource("WorldBoundaryShape2D_272bh")
 shape = SubResource("WorldBoundaryShape2D_juppl")
 
 [node name="Player" parent="." unique_id=564327840 node_paths=PackedStringArray("boss") instance=ExtResource("1_ig7tw")]
+position = Vector2(0, 201)
 boss = NodePath("../Demo_Enemy")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2083479872]
@@ -188,7 +189,6 @@ player = NodePath("../Player")
 [node name="Demo_Enemy" parent="." unique_id=128894906 instance=ExtResource("7_5vw27")]
 
 [node name="bullet_test2" type="Node2D" parent="Demo_Enemy" unique_id=1466334369 node_paths=PackedStringArray("player")]
-position = Vector2(0, 32)
 script = ExtResource("4_1bvp3")
 player = NodePath("../../Player")
 

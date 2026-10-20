@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bcw44uafudth0"]
+
+[ext_resource type="Texture2D" uid="uid://c033i1rb7c1yq" path="res://Entities/laser_1/Assets/laser_1_body.png" id="1_axhkg"]
+[ext_resource type="Script" uid="uid://ddf86y7c54824" path="res://Entities/laser_1/laser_1_body.gd" id="2_5gu83"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_axhkg"]
+a = Vector2(0, -4)
+b = Vector2(32, -4)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_juppl"]
+a = Vector2(0, 4)
+b = Vector2(32, 4)
+
+[node name="Line2D" type="Line2D" unique_id=51817655]
+texture_filter = 1
+texture_repeat = 2
+points = PackedVector2Array(0, 0, 32, 0)
+width = 16.0
+texture = ExtResource("1_axhkg")
+texture_mode = 1
+script = ExtResource("2_5gu83")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1485403675]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=173220649]
+shape = SubResource("SegmentShape2D_axhkg")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=71401401]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=208919539]
+shape = SubResource("SegmentShape2D_juppl")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
+[connection signal="area_exited" from="Area2D2" to="." method="_on_area_2d_2_area_exited"]

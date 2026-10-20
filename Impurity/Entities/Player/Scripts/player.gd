@@ -163,9 +163,13 @@ func shoot_bullet() -> void:
 	await get_tree().create_timer(0.05).timeout
 	attacking = false
 
+#this also increases tick, the variable for reward checks
 func gain_graze(amount: int) -> void:
 	GRAZE += amount
 	tick += amount
+	
+func lose_graze(amount: int) -> void:
+	GRAZE -= amount
 	
 func get_graze() -> int:
 	return GRAZE
