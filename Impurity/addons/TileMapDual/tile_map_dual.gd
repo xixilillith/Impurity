@@ -174,3 +174,7 @@ func _changed() -> void:
 func _update_cells(coords: Array[Vector2i], _forced_cleanup: bool) -> void:
 	if is_instance_valid(_display):
 		_display.update(coords)
+
+
+func _on_anti_cheese_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.

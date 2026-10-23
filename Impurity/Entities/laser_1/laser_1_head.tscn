@@ -73,6 +73,8 @@ emission_ring_height = 1.0
 emission_ring_radius = 1.0
 emission_ring_inner_radius = 0.0
 emission_ring_cone_angle = 90.0
+angle_min = -24.99999
+angle_max = 25.000011
 inherit_velocity_ratio = 1.0
 initial_velocity_min = 103.0
 initial_velocity_max = 137.34
@@ -96,12 +98,12 @@ shape = SubResource("CircleShape2D_4vivr")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1093904199]
 emitting = false
-amount = 30
+amount = 50
 interp_to_end = 0.052
 one_shot = true
 explosiveness = 0.79
 randomness = 0.75
-collision_base_size = 25.84
+collision_base_size = 51.74
 process_material = SubResource("ParticleProcessMaterial_juppl")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

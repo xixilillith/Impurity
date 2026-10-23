@@ -5,6 +5,7 @@ var in_laser = false
 var in_wall1 = false
 var in_wall2 = false
 var player: Node = null
+var HAS_HIT := false
 
 var p0: Vector2
 var p1: Vector2
@@ -62,4 +63,5 @@ func _process(delta: float) -> void:
 	
 	if in_laser:
 		if player.has_method("take_damage"):
+			HAS_HIT = true
 			player.take_damage(1)

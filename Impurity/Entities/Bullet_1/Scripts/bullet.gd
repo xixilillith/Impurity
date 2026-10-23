@@ -17,10 +17,3 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
-
-#GRAZE!
-func _on_area_2d_area_exited(area: Area2D) -> void:
-	if area.get_parent().has_method("gain_graze") and not HAS_GRAZED \
-	and not HAS_HIT:
-		area.get_parent().gain_graze(5)
-		HAS_GRAZED = true

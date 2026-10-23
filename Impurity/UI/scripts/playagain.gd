@@ -12,7 +12,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if boss.is_dead():
+	if boss.is_dead() and not player.is_dead():
 		replay_button.visible = true
 	else:
 		replay_button.visible = false

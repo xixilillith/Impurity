@@ -1,30 +1,33 @@
 extends CharacterBody2D
 
 @export var boss: Area2D
-const BULLET_SCENE = preload("res://Entities/player_bullet/player_bullet.tscn")
-const BULLET_OFFSET = Vector2(0, -20)
-const OFFSET_1 = Vector2(-10, 0)
-const OFFSET_2 = Vector2(10, 0)
+const BULLET_SCENE := preload("res://Entities/player_bullet/player_bullet.tscn")
+const BULLET_OFFSET := Vector2(0, -20)
+const OFFSET_1 := Vector2(-10, 0)
+const OFFSET_2 := Vector2(10, 0)
 
-var bullet = 1
-var auto_aim = false
-var reward_duration = 10
+var bullet := 1
+var auto_aim := false
+var reward_duration := 10
 
-const SPEED = 300.0
-const SPRINT_MULTIPLIER = 1.5
-const SLOW_MULTIPLIER = 0.5
+const SPEED := 300.0
+const SPRINT_MULTIPLIER := 1.5
+const SLOW_MULTIPLIER := 0.5
 
 const MAX_HEALTH := 150.0
 var HEALTH := 150.0
-var GRAZE = 0
+var GRAZE := 0
 # tick is for reward from graze
-var tick = 0
-var DEAD = false
-var attacking = false
+var tick := 0
+var DEAD := false
+var attacking := false
 
-var direction_queue = []
-var facing_direction = "down"
-var status = "idle"
+var parrying := false
+var parrying_window := 0.1
+
+var direction_queue: Array
+var facing_direction := "down"
+var status := "idle"
 
 func _physics_process(_delta: float) -> void:
 	
@@ -40,60 +43,68 @@ func _physics_process(_delta: float) -> void:
 	# input, directions are -1, 0, or 1
 	var directionx := Input.get_axis("move_left", "move_right")
 	var directiony := Input.get_axis("move_up", "move_down")
-	var running := Input.is_action_pressed("run")
+	var parry := Input.is_action_pressed("parry")
 	var slowing := Input.is_action_pressed("slow")
 	var shooting := Input.is_action_pressed("shoot")
 	var speed := SPEED
-	if running:
-		speed = speed * SPRINT_MULTIPLIER
-	elif slowing:
+	if slowing:
 		speed = speed * SLOW_MULTIPLIER
 	var input_direction := Vector2(directionx, directiony).normalized()
 	
 	#movement
 	if not DEAD:
-		if directionx:
-			velocity.x = input_direction.x * speed
+		if parry and not parrying:
+			parrying = true
+			print("parry")
+			await get_tree().create_timer(parrying_window).timeout
+			parrying = false
+			print("parry over")
+		
+		if not parry:
+			if directionx:
+				velocity.x = input_direction.x * speed
+					
+				# the following lines check direction (for sprites)
+				if directionx == -1:
+					if "RIGHT" in direction_queue:
+						direction_queue.erase("RIGHT")
+					if not "LEFT" in direction_queue:
+						direction_queue.append("LEFT")
+				elif directionx == 1:
+					if "LEFT" in direction_queue:
+						direction_queue.erase("LEFT")
+					if not "RIGHT" in direction_queue:
+						direction_queue.append("RIGHT")
+			else:
+				velocity.x = move_toward(velocity.x, 0, SPEED)
+				direction_queue.erase("RIGHT")
+				direction_queue.erase("LEFT")
 				
-			# the following lines check direction (for sprites)
-			if directionx == -1:
-				if "RIGHT" in direction_queue:
-					direction_queue.erase("RIGHT")
-				if not "LEFT" in direction_queue:
-					direction_queue.append("LEFT")
-			elif directionx == 1:
-				if "LEFT" in direction_queue:
-					direction_queue.erase("LEFT")
-				if not "RIGHT" in direction_queue:
-					direction_queue.append("RIGHT")
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			direction_queue.erase("RIGHT")
-			direction_queue.erase("LEFT")
-			
-		if directiony:
-			velocity.y = input_direction.y * speed
-			if directiony == -1:
-				if "DOWN" in direction_queue:
-					direction_queue.erase("DOWN")
-				if not "UP" in direction_queue:
-					direction_queue.append("UP")
-			elif directiony == 1:
-				if "UP" in direction_queue:
-					direction_queue.erase("UP")
-				if not "DOWN" in direction_queue:
-					direction_queue.append("DOWN")
-		else:
-			velocity.y = move_toward(velocity.y, 0, SPEED)
-			direction_queue.erase("DOWN")
-			direction_queue.erase("UP")
+			if directiony:
+				velocity.y = input_direction.y * speed
+				if directiony == -1:
+					if "DOWN" in direction_queue:
+						direction_queue.erase("DOWN")
+					if not "UP" in direction_queue:
+						direction_queue.append("UP")
+				elif directiony == 1:
+					if "UP" in direction_queue:
+						direction_queue.erase("UP")
+					if not "DOWN" in direction_queue:
+						direction_queue.append("DOWN")
+			else:
+				velocity.y = move_toward(velocity.y, 0, SPEED)
+				direction_queue.erase("DOWN")
+				direction_queue.erase("UP")
 
-		move_and_slide()
-		
-		# firing/shooting
-		
-		if shooting and not attacking:
-			shoot_bullet()
+			move_and_slide()
+			
+			# firing/shooting
+			
+			if shooting and not attacking:
+				shoot_bullet()
+				
+			
 
 	# USE THE FOLLOWING LINE IF NOTHING IS WORKING
 	#print("test")
@@ -106,7 +117,7 @@ func _physics_process(_delta: float) -> void:
 	#print("You are " + status + " facing " + facing_direction + ".")
 	
 	check_reward()
-
+	
 func get_direction_sprite() -> void:
 	if not direction_queue.is_empty():
 		facing_direction = direction_queue.back().to_lower()
@@ -152,17 +163,19 @@ func shoot_bullet() -> void:
 	new_bullet.global_position = global_position + BULLET_OFFSET + OFFSET_1
 	new_bullet2.global_position = global_position + BULLET_OFFSET + OFFSET_2
 	if not auto_aim:
-		new_bullet.velocity = Vector2.UP * 200
-		new_bullet2.velocity = Vector2.UP * 200
+		new_bullet.velocity = Vector2.UP * 500
+		new_bullet2.velocity = Vector2.UP * 500
 	else:
 		new_bullet.velocity = (boss.global_position \
-		- new_bullet.global_position).normalized() * 200
+		- new_bullet.global_position).normalized() * 500
 		new_bullet2.velocity = (boss.global_position \
-		- new_bullet2.global_position).normalized() * 200
+		- new_bullet2.global_position).normalized() * 500
 	get_tree().current_scene.add_child(new_bullet)
 	get_tree().current_scene.add_child(new_bullet2)
-	await get_tree().create_timer(0.05).timeout
+	await get_tree().create_timer(0.05 if not auto_aim else 0.15).timeout
 	attacking = false
+
+
 
 #this also increases tick, the variable for reward checks
 func gain_graze(amount: int) -> void:
@@ -183,3 +196,9 @@ func check_reward() -> void:
 			print("auto_aim")
 			await get_tree().create_timer(reward_duration).timeout
 			auto_aim = false
+
+
+func _on_graze_collision_area_exited(area: Area2D) -> void:
+	if area.HAS_HIT == false:
+		print("GRAZE_TEST")
+		gain_graze(15)
