@@ -233,4 +233,5 @@ collision_mask = 4
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="graze_collision" unique_id=613227715]
 shape = SubResource("CircleShape2D_5c2io")
 
+[connection signal="area_entered" from="graze_collision" to="." method="_on_graze_collision_area_entered"]
 [connection signal="area_exited" from="graze_collision" to="." method="_on_graze_collision_area_exited"]

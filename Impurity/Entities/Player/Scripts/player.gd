@@ -23,7 +23,8 @@ var DEAD := false
 var attacking := false
 
 var parrying := false
-var parrying_window := 0.1
+var parrying_window := 0.3
+var parry_available := true
 
 var direction_queue: Array
 var facing_direction := "down"
@@ -53,12 +54,16 @@ func _physics_process(_delta: float) -> void:
 	
 	#movement
 	if not DEAD:
-		if parry and not parrying:
+		if parry and not parrying and parry_available:
+			parry_available = false
 			parrying = true
 			print("parry")
 			await get_tree().create_timer(parrying_window).timeout
 			parrying = false
 			print("parry over")
+			await get_tree().create_timer(1).timeout
+			parry_available = true
+			print("parry off cooldown")
 		
 		if not parry:
 			if directionx:
@@ -199,6 +204,12 @@ func check_reward() -> void:
 
 
 func _on_graze_collision_area_exited(area: Area2D) -> void:
-	if area.HAS_HIT == false:
+	if not area.HAS_HIT and not area.HAS_PARRIED:
 		print("GRAZE_TEST")
 		gain_graze(15)
+
+
+func _on_graze_collision_area_entered(area: Area2D) -> void:
+	if parrying == true:
+		area.velocity = -area.velocity
+		area.HAS_PARRIED = true
