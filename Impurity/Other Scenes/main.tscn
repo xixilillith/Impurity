@@ -185,15 +185,20 @@ player = NodePath("../Player")
 boss = NodePath("../Demo_Enemy")
 UI = NodePath("../Camera2D/UI")
 
-[node name="Anti-Cheese" type="Area2D" parent="." unique_id=1962137201 node_paths=PackedStringArray("player")]
+[node name="Anti-Cheese" type="Area2D" parent="." unique_id=1962137201 node_paths=PackedStringArray("player", "bullet_node")]
 position = Vector2(0, -125)
 collision_mask = 2
 script = ExtResource("10_4blnt")
 player = NodePath("../Player")
+bullet_node = NodePath("../Demo_Enemy/bullet_test2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Anti-Cheese" unique_id=749976643]
 position = Vector2(0, -93.5)
 shape = SubResource("RectangleShape2D_juppl")
+
+[node name="Timer" type="Timer" parent="Anti-Cheese" unique_id=1883526357]
+wait_time = 0.5
+autostart = true
 
 [node name="Borders" type="Node2D" parent="." unique_id=2010086756]
 
@@ -220,3 +225,5 @@ shape = SubResource("WorldBoundaryShape2D_juppl")
 [connection signal="timeout" from="Demo_Enemy/bullet_test2/Timer" to="Demo_Enemy/bullet_test2" method="_on_timer_timeout"]
 [connection signal="area_entered" from="Anti-Cheese" to="Anti-Cheese" method="_on_area_entered"]
 [connection signal="area_exited" from="Anti-Cheese" to="Anti-Cheese" method="_on_area_exited"]
+[connection signal="timeout" from="Anti-Cheese/Timer" to="TileMapDual" method="_on_timer_timeout"]
+[connection signal="timeout" from="Anti-Cheese/Timer" to="Anti-Cheese" method="_on_timer_timeout"]

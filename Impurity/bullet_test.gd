@@ -8,6 +8,7 @@ var attacking = false
 var laser_attacking = false
 var attack_num = 1
 var laser_attack_num = 1
+var cheese := false
 
 var offset := 20
 
@@ -20,7 +21,8 @@ func _on_timer_timeout() -> void:
 	var player_is_dead = player.is_dead()
 	var player_dir := (player.global_position - global_position).normalized()
 	
-	if not attacking and not player_is_dead and not get_parent().is_dead():
+	if not attacking and not player_is_dead \
+	 and not get_parent().is_dead() and not cheese:
 		if attack_num <= 20:
 			fire_arc_ltr(20, 45, player_dir, 200, 0.05)
 		elif attack_num <= 40:
