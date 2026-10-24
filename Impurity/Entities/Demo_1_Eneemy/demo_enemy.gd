@@ -8,8 +8,8 @@ var MID_POINT: Vector2 = (POINTA + POINTB) / Vector2(2, 2)
 var target_point: Vector2
 
 var DEAD = false
-const MAX_HEALTH := 500.0
-var HEALTH := 500.0
+const MAX_HEALTH := 2000.0
+var HEALTH := 2000.0
 var velocity = Vector2.ZERO
 
 func _ready() -> void:

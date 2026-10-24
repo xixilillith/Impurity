@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://vshddccu3nck" path="res://UI/playagain.tscn" id="9_m7x31"]
 [ext_resource type="Script" uid="uid://1d22b8xu8028" path="res://Other Scenes/Scripts/anti_cheese.gd" id="10_4blnt"]
 [ext_resource type="PackedScene" uid="uid://d1nstht6f4oph" path="res://Entities/Demo_1_Eneemy/Dialogue/Balloons/balloon.tscn" id="11_cbln3"]
+[ext_resource type="AudioStream" uid="uid://ctyemyyvlv4ln" path="res://Entities/Demo_1_Eneemy/Assets/HowGreatThouArn't.mp3" id="11_hyhej"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7mycd"]
 texture = ExtResource("2_cbln3")
@@ -201,6 +202,10 @@ shape = SubResource("RectangleShape2D_juppl")
 [node name="Timer" type="Timer" parent="Anti-Cheese" unique_id=1883526357]
 wait_time = 0.5
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Anti-Cheese" unique_id=411757816]
+stream = ExtResource("11_hyhej")
+autoplay = true
 
 [node name="Borders" type="Node2D" parent="." unique_id=2010086756]
 

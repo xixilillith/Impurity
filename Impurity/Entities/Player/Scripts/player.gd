@@ -14,8 +14,8 @@ const SPEED := 300.0
 const SPRINT_MULTIPLIER := 1.5
 const SLOW_MULTIPLIER := 0.5
 
-const MAX_HEALTH := 150.0
-var HEALTH := 150.0
+const MAX_HEALTH := 500.0
+var HEALTH := 500.0
 var GRAZE := 0
 # tick is for reward from graze
 var tick := 0
