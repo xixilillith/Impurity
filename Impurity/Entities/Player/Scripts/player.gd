@@ -11,9 +11,9 @@ var auto_aim := false
 var reward_duration := 10
 var reward_requirement := 500
 
-const SPEED := 300.0
+const SPEED := 150.0
 const SPRINT_MULTIPLIER := 1.5
-const SLOW_MULTIPLIER := 0.25
+const SLOW_MULTIPLIER := 0.5
 
 const MAX_HEALTH := 500.0
 var HEALTH := 500.0
@@ -217,7 +217,6 @@ func check_reward() -> void:
 
 func _on_graze_collision_area_exited(area: Area2D) -> void:
 	if not area.HAS_HIT and not area.HAS_PARRIED:
-		print("GRAZE_TEST")
 		gain_graze(15)
 
 
@@ -225,3 +224,4 @@ func _on_graze_collision_area_entered(area: Area2D) -> void:
 	if parrying == true:
 		area.velocity = -area.velocity
 		area.HAS_PARRIED = true
+		print("Parry!")

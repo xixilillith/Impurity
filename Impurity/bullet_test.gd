@@ -36,15 +36,16 @@ func _on_timer_timeout() -> void:
 		if blast_countdown != 15 and not blasting:
 			if not other_attack:
 				if attack_num <= 20:
-					fire_arc_ltr(20, 45, player_dir, 200, 0.05)
+					fire_arc_ltr(10, 45, player_dir, 200, 0.05)
 				elif attack_num <= 40:
-					fire_line(20, 200, 0.05)
+					fire_line(10, 200, 0.05)
+					fire_sweep(71, 360, player_dir, 200)
 				elif attack_num <= 60:
-					fire_arc_rtl(20, 45, player_dir, 200, 0.05)
+					fire_arc_rtl(10, 45, player_dir, 200, 0.05)
 				elif attack_num <= 80:
-					fire_cross(40, 90, player_dir, 200, 0.05)
+					fire_cross(20, 90, player_dir, 200, 0.05)
 				elif attack_num <= 100:
-					fire_sweep(40, 180, Vector2.DOWN, 200)
+					fire_sweep_cross(40, 180, player_dir, 200, 0.05)
 				if not laser_attacking:
 					if laser_attack_num <= 5:
 						fire_laser_one_auto(1000)
@@ -66,7 +67,7 @@ func _on_timer_timeout() -> void:
 				fire_sweep(71, 360, player_dir, 150)
 				other_attack = not other_attack
 		else:
-			if blast_count != 3:
+			if blast_count != 9:
 				fire_sweep(71, 360, player_dir, 150)
 				blast_count += 1
 				blasting = true
@@ -145,6 +146,37 @@ func fire_sweep(count: int, arc_deg: float, center_dir: Vector2, vel: int) -> vo
 		
 		get_tree().current_scene.add_child(new_bullet)
 		
+	attacking = false
+
+func fire_sweep_cross(count:int, arc_deg: float, center_dir: Vector2, vel: int, delay: float) -> void:
+	attacking = true
+	var center = global_position
+	var radius = offset
+	var sweep = deg_to_rad(arc_deg)
+	var half = sweep / 2
+	var mid_angle = center_dir.angle()
+	var start_angle_1 = mid_angle + half
+	var start_angle_2 = mid_angle - half
+	for i in count:
+		var new_bullet_1 = bullet_scene.instantiate()
+		var new_bullet_2 = bullet_scene.instantiate()
+		var t = float(i) / (count - 1)
+		var arc_angle_1 = start_angle_1 - sweep * t
+		var arc_angle_2 = start_angle_2 + sweep * t
+		var pos_1 = center + Vector2.from_angle(arc_angle_1) * radius
+		var pos_2 = center + Vector2.from_angle(arc_angle_2) * radius
+		var dir_1 = Vector2.from_angle(arc_angle_1)
+		var dir_2 = Vector2.from_angle(arc_angle_2)
+		
+		new_bullet_1.global_position = pos_1
+		new_bullet_2.global_position = pos_2
+		new_bullet_1.velocity = vel * dir_1
+		new_bullet_2.velocity = vel * dir_2
+		
+		get_tree().current_scene.add_child(new_bullet_1)
+		get_tree().current_scene.add_child(new_bullet_2)
+		
+		await get_tree().create_timer(delay).timeout
 	attacking = false
 
 func fire_cross(count: int, arc_deg: float, center_dir: Vector2, vel: int, delay: float) -> void:
