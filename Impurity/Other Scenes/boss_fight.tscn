@@ -203,6 +203,7 @@ autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Borders/Anti-Cheese" unique_id=1182029578]
 stream = ExtResource("8_pjrvs")
+autoplay = true
 
 [node name="Floor" type="StaticBody2D" parent="Borders" unique_id=1795377009]
 

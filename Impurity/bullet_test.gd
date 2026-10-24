@@ -63,19 +63,16 @@ func _on_timer_timeout() -> void:
 				laser_attack_num = random_las_attack
 				blast_countdown += 1
 			else:
-				fire_sweep(60, 360, Vector2.DOWN, 150)
+				fire_sweep(71, 360, player_dir, 150)
 				other_attack = not other_attack
 		else:
 			if blast_count != 3:
-				if blast_count % 2 == 0:
-					fire_sweep(60, 360, Vector2.DOWN, 150)
-				else:
-					fire_sweep(61, 360, Vector2.DOWN, 150)
+				fire_sweep(71, 360, player_dir, 150)
 				blast_count += 1
 				blasting = true
 				laser_attacking = true
 			else:
-				fire_sweep(60, 360, Vector2.DOWN, 150)
+				fire_sweep(73, 360, player_dir, 150)
 				blast_count = 1
 				blast_countdown = 0
 				blasting = false

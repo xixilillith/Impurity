@@ -12,6 +12,7 @@ a = Vector2(0, 4)
 b = Vector2(32, 4)
 
 [node name="Line2D" type="Line2D" unique_id=51817655]
+top_level = true
 texture_filter = 1
 texture_repeat = 2
 points = PackedVector2Array(0, 0, 32, 0)

@@ -9,6 +9,7 @@ const OFFSET_2 := Vector2(10, 0)
 var bullet := 1
 var auto_aim := false
 var reward_duration := 10
+var reward_requirement := 500
 
 const SPEED := 300.0
 const SPRINT_MULTIPLIER := 1.5
@@ -206,7 +207,7 @@ func get_graze() -> int:
 
 func check_reward() -> void:
 	if auto_aim == false:
-		if tick >= 100:
+		if tick >= reward_requirement:
 			tick = 0
 			auto_aim = true
 			print("auto_aim")
