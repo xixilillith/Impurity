@@ -47,7 +47,7 @@ grow_vertical = 0
 text = "KEYBINDS:
 WASD or Arrow Keys to move.
 Z to shoot.
-X to speed up. (Hold)
+X to parry. (1 sec cooldown)
 Shift to slow down. (Hold)"
 
 [node name="Label5" type="Label" parent="CanvasLayer" unique_id=315754877]
