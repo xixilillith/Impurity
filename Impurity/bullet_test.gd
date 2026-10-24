@@ -4,16 +4,22 @@ extends Node2D
 const bullet_scene = preload("res://Entities/Bullet_1/bullet.tscn")
 const laser_head_scn = preload("res://Entities/laser_1/laser_1_head.tscn")
 const laser_body_scn = preload("res://Entities/laser_1/laser_1_body.tscn")
+const resource = preload("res://Entities/Demo_1_Eneemy/Dialogue/demo_intro.dialogue")
 var attacking = false
 var laser_attacking = false
 var attack_num = 1
 var laser_attack_num = 1
 var cheese := false
+var intro_dialogue := true
 
 var offset := 20
 
 func _ready() -> void:
 	randomize()
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+
+func _on_dialogue_ended(resource: DialogueResource) -> void:
+	intro_dialogue = false
 
 func _on_timer_timeout() -> void:
 	var random_attack = randi_range(1, 100)
@@ -22,7 +28,7 @@ func _on_timer_timeout() -> void:
 	var player_dir := (player.global_position - global_position).normalized()
 	
 	if not attacking and not player_is_dead \
-	 and not get_parent().is_dead() and not cheese:
+	 and not get_parent().is_dead() and not cheese and not intro_dialogue:
 		if attack_num <= 20:
 			fire_arc_ltr(20, 45, player_dir, 200, 0.05)
 		elif attack_num <= 40:

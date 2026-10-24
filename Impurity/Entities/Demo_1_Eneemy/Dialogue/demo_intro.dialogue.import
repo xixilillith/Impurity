@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://bflnnwnnqkeiu"
+path="res://.godot/imported/demo_intro.dialogue-c4dac17334bf960f207743c10edee7ab.tres"
+
+[deps]
+
+source_file="res://Entities/Demo_1_Eneemy/Dialogue/demo_intro.dialogue"
+dest_files=["res://.godot/imported/demo_intro.dialogue-c4dac17334bf960f207743c10edee7ab.tres"]
+
+[params]
+
+defaults=true

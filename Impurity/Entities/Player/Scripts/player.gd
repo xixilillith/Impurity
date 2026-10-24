@@ -29,6 +29,13 @@ var parry_available := true
 var direction_queue: Array
 var facing_direction := "down"
 var status := "idle"
+var intro_dialogue := true
+
+func _ready() -> void:
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+
+func _on_dialogue_ended(resource: DialogueResource) -> void:
+	intro_dialogue = false
 
 func _physics_process(_delta: float) -> void:
 	
@@ -106,7 +113,7 @@ func _physics_process(_delta: float) -> void:
 			
 			# firing/shooting
 			
-			if shooting and not attacking:
+			if shooting and not attacking and not intro_dialogue:
 				shoot_bullet()
 				
 			
