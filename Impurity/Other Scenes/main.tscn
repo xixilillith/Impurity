@@ -186,10 +186,11 @@ player = NodePath("../Player")
 boss = NodePath("../Demo_Enemy")
 UI = NodePath("../Camera2D/UI")
 
-[node name="Anti-Cheese" type="Area2D" parent="." unique_id=1962137201 node_paths=PackedStringArray("player", "bullet_node")]
+[node name="Anti-Cheese" type="Area2D" parent="." unique_id=1962137201 node_paths=PackedStringArray("boss", "player", "bullet_node")]
 position = Vector2(0, -125)
 collision_mask = 2
 script = ExtResource("10_4blnt")
+boss = NodePath("../Demo_Enemy")
 player = NodePath("../Player")
 bullet_node = NodePath("../Demo_Enemy/bullet_test2")
 
