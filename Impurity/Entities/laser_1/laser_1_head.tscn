@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ce2v0fl5fa7iu" path="res://Entities/laser_1/Scripts/laser_1_head.gd" id="1_4vivr"]
 [ext_resource type="Texture2D" uid="uid://vh4446pe5rnf" path="res://Entities/laser_1/Assets/laser_1_head_anim.png" id="2_4vivr"]
+[ext_resource type="AudioStream" uid="uid://mo2oluw7l8xr" path="res://Entities/laser_1/Assets/sfx_I_guess.wav" id="3_6nfsc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nfsc"]
 atlas = ExtResource("2_4vivr")
@@ -105,6 +106,11 @@ explosiveness = 0.79
 randomness = 0.75
 collision_base_size = 51.74
 process_material = SubResource("ParticleProcessMaterial_juppl")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1877880529]
+stream = ExtResource("3_6nfsc")
+autoplay = true
+bus = &"Bitcrush SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

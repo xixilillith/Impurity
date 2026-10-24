@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://537t1b5tuedu"]
 
 [ext_resource type="Texture2D" uid="uid://bpo40e0ahdv77" path="res://Entities/player_bullet/Assets/player_bullet.png" id="1_n1rf0"]
-[ext_resource type="Script" uid="uid://v2tbsrt8vlc1" path="res://Entities/player_bullet/player_bullet.gd" id="1_vkvmq"]
+[ext_resource type="Script" uid="uid://v2tbsrt8vlc1" path="res://Entities/player_bullet/Scripts/player_bullet.gd" id="1_vkvmq"]
+[ext_resource type="AudioStream" uid="uid://01nsfw67rk30" path="res://Entities/player_bullet/Assets/hit.wav" id="3_gcocc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n1rf0"]
 radius = 8.0
@@ -19,6 +20,10 @@ shape = SubResource("CircleShape2D_n1rf0")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1147875685]
 rect = Rect2(-8, -8, 16, 16)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=85455491]
+stream = ExtResource("3_gcocc")
+bus = &"Bitcrush SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

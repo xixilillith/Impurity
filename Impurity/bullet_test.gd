@@ -11,6 +11,10 @@ var attack_num = 1
 var laser_attack_num = 1
 var cheese := false
 var intro_dialogue := true
+var other_attack := false
+var blast_countdown := 0
+var blast_count = 1
+var blasting := false
 
 var offset := 20
 
@@ -29,30 +33,54 @@ func _on_timer_timeout() -> void:
 	
 	if not attacking and not player_is_dead \
 	 and not get_parent().is_dead() and not cheese and not intro_dialogue:
-		if attack_num <= 20:
-			fire_arc_ltr(20, 45, player_dir, 200, 0.05)
-		elif attack_num <= 40:
-			fire_line(20, 200, 0.05)
-		elif attack_num <= 60:
-			fire_arc_rtl(20, 45, player_dir, 200, 0.05)
-		elif attack_num <= 80:
-			fire_cross(40, 90, player_dir, 200, 0.05)
-		if not laser_attacking:
-			if laser_attack_num <= 5:
-				fire_laser_one_auto(1000)
-			elif laser_attack_num <= 10:
-				fire_laser_cross_auto(1000)
-			elif laser_attack_num <= 15:
-				fire_laser_semi_ltr_auto(1000, 10)
-			elif laser_attack_num <= 20:
-				fire_laser_semi_rtl_auto(1000, 10)
-			elif laser_attack_num <= 25:
-				fire_laser_semi_rtl_chaos(1000, 10)
-			elif laser_attack_num <= 30:
-				fire_laser_semi_ltr_chaos(1000, 10)
-		attack_num = random_attack
-		laser_attack_num = random_las_attack
-		
+		if blast_countdown != 15 and not blasting:
+			if not other_attack:
+				if attack_num <= 20:
+					fire_arc_ltr(20, 45, player_dir, 200, 0.05)
+				elif attack_num <= 40:
+					fire_line(20, 200, 0.05)
+				elif attack_num <= 60:
+					fire_arc_rtl(20, 45, player_dir, 200, 0.05)
+				elif attack_num <= 80:
+					fire_cross(40, 90, player_dir, 200, 0.05)
+				elif attack_num <= 100:
+					fire_sweep(40, 180, Vector2.DOWN, 200)
+				if not laser_attacking:
+					if laser_attack_num <= 5:
+						fire_laser_one_auto(1000)
+					elif laser_attack_num <= 10:
+						fire_laser_cross_auto(1000)
+					elif laser_attack_num <= 15:
+						fire_laser_semi_ltr_auto(1000, 11)
+					elif laser_attack_num <= 20:
+						fire_laser_semi_rtl_auto(1000, 11)
+					elif laser_attack_num <= 25:
+						fire_laser_semi_rtl_chaos(1000, 11)
+					elif laser_attack_num <= 30:
+						fire_laser_semi_ltr_chaos(1000, 11)
+				other_attack = not other_attack
+				attack_num = random_attack
+				laser_attack_num = random_las_attack
+				blast_countdown += 1
+			else:
+				fire_sweep(60, 360, Vector2.DOWN, 150)
+				other_attack = not other_attack
+		else:
+			if blast_count != 3:
+				if blast_count % 2 == 0:
+					fire_sweep(60, 360, Vector2.DOWN, 150)
+				else:
+					fire_sweep(61, 360, Vector2.DOWN, 150)
+				blast_count += 1
+				blasting = true
+				laser_attacking = true
+			else:
+				fire_sweep(60, 360, Vector2.DOWN, 150)
+				blast_count = 1
+				blast_countdown = 0
+				blasting = false
+				await get_tree().create_timer(10).timeout
+				laser_attacking = false
 func fire_arc_ltr(count: int, arc_deg: float, center_dir: Vector2, vel: int, delay: float) -> void:
 	attacking = true
 	var step := arc_deg / (count - 1)
@@ -99,6 +127,27 @@ func fire_line(count: int, vel: int, delay: float) -> void:
 		
 		await get_tree().create_timer(delay).timeout
 	
+	attacking = false
+	
+func fire_sweep(count: int, arc_deg: float, center_dir: Vector2, vel: int) -> void:
+	attacking = true
+	var center = global_position
+	var radius = offset
+	var sweep = deg_to_rad(arc_deg)
+	var half = sweep / 2
+	var mid_angle = center_dir.angle()
+	var start_angle = mid_angle + half
+	for i in count:
+		var new_bullet = bullet_scene.instantiate()
+		var t = float(i) / (count - 1)
+		var arc_angle = start_angle - sweep * t
+		var pos = center + Vector2.from_angle(arc_angle) * radius
+		var dir = Vector2.from_angle(arc_angle)
+		new_bullet.global_position = pos
+		new_bullet.velocity = vel * dir
+		
+		get_tree().current_scene.add_child(new_bullet)
+		
 	attacking = false
 
 func fire_cross(count: int, arc_deg: float, center_dir: Vector2, vel: int, delay: float) -> void:

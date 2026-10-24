@@ -12,7 +12,7 @@ var reward_duration := 10
 
 const SPEED := 300.0
 const SPRINT_MULTIPLIER := 1.5
-const SLOW_MULTIPLIER := 0.5
+const SLOW_MULTIPLIER := 0.25
 
 const MAX_HEALTH := 500.0
 var HEALTH := 500.0
@@ -122,7 +122,7 @@ func _physics_process(_delta: float) -> void:
 	#print("test")
 	
 	get_direction_sprite()
-	update_anim()
+	update_anim(slowing)
 	
 	# USE THE FOLLOWING LINES IF SPRITES ARE NOT UPDATING CORRECTLY
 	#print(direction_queue)
@@ -140,9 +140,11 @@ func is_moving() -> bool:
 	status = "moving" if moving else "idle"
 	return moving
 	
-func update_anim() -> void:
-	is_moving()
-	$sprite.play(status + "_" + facing_direction)
+func update_anim(slowing: bool) -> void:
+	if slowing:
+		$sprite.play("idle_up_hitbox")
+	else:
+		$sprite.play("idle_up")
 	
 func take_damage(amount) -> void:
 	HEALTH = HEALTH - amount
@@ -175,13 +177,15 @@ func shoot_bullet() -> void:
 	new_bullet.global_position = global_position + BULLET_OFFSET + OFFSET_1
 	new_bullet2.global_position = global_position + BULLET_OFFSET + OFFSET_2
 	if not auto_aim:
-		new_bullet.velocity = Vector2.UP * 500
-		new_bullet2.velocity = Vector2.UP * 500
+		new_bullet.velocity = Vector2.UP * 1000
+		new_bullet2.velocity = Vector2.UP * 1000
 	else:
 		new_bullet.velocity = (boss.global_position \
-		- new_bullet.global_position).normalized() * 500
+		- new_bullet.global_position).normalized() * 1000
 		new_bullet2.velocity = (boss.global_position \
-		- new_bullet2.global_position).normalized() * 500
+		- new_bullet2.global_position).normalized() * 1000
+	new_bullet.player = self
+	new_bullet2.player = self
 	get_tree().current_scene.add_child(new_bullet)
 	get_tree().current_scene.add_child(new_bullet2)
 	await get_tree().create_timer(0.05 if not auto_aim else 0.15).timeout

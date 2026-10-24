@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://55rofsqi6v5y"]
+
+[ext_resource type="Script" uid="uid://c252s12kaowdq" path="res://bullet_test.gd" id="1_x4ehk"]
+
+[node name="bullet_test2" type="Node2D" unique_id=1204148723 node_paths=PackedStringArray("player")]
+script = ExtResource("1_x4ehk")
+player = NodePath("")
+
+[node name="Timer" type="Timer" parent="." unique_id=1751960112]
+wait_time = 0.3
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

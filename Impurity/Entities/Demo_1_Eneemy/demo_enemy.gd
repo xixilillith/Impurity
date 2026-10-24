@@ -26,14 +26,14 @@ func _physics_process(delta: float) -> void:
 		visible = true
 		monitorable = true
 	
-	if not DEAD:
-		global_position = global_position.move_toward(target_point, SPEED * delta)
+	#if not DEAD:
+		#global_position = global_position.move_toward(target_point, SPEED * delta)
 		
-		if global_position.distance_to(target_point) < 0.1:
-			if target_point == POINTA:
-				target_point = POINTB
-			elif target_point == POINTB:
-				target_point = POINTA
+		#if global_position.distance_to(target_point) < 0.1:
+		#	if target_point == POINTA:
+		#		target_point = POINTB
+		#	elif target_point == POINTB:
+		#		target_point = POINTA
 
 func take_damage(amount: int) -> void:
 	HEALTH -= amount
